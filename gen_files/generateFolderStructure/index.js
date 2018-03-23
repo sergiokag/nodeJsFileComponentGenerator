@@ -1,28 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const cmds = require('../boilerplate/index');
-const subDirs = [ 
-                    {   
-                        subName: 'css',
-                        fileType: 'style.css',
-                        fileContent: '',
-                    }, 
-                    {   
-                        subName: 'html',
-                        fileType: 'template.html',
-                        fileContent: '',
-                    }, 
-                    {   
-                        subName: 'js',
-                        fileType: 'component.ts',
-                        fileContent: '',
-                    },
-                    {   
-                        subName: 'resources',
-                        fileType: 'resources.el.ts',
-                        fileContent: '',
-                    }                    
-                ];
+const subDirs = require('../api/data');
 
 function generateCustomComponent() {
 
@@ -71,27 +50,27 @@ function generateCustomComponent() {
      * */        
     
     for( sub of subDirs ) {
-
-        if (!fs.existsSync(`${dir}/${sub.subName}`)){
+        
+        if (!fs.existsSync(`${dir}/${sub.subFolder}`)){
 
             // create sub directories
-            fs.mkdirSync(`${dir}/${sub.subName}`);
+            fs.mkdirSync(`${dir}/${sub.subFolder}`);
 
             // create the files in the sub directories
 
             fs.appendFileSync(
-                `${dir}/${sub.subName}/${dir}.${sub.fileType}`, 
+                `${dir}/${sub.subFolder}/${dir}.${sub.fileType}`, 
                 `${sub.fileContent}`
             );
-            
-            // must be refactored!!!! - SERGIO KAGIEMA
-            if(sub.subName === 'resources') {
+
+        }
+        else {
+                // create the files in the sub directories
+                // if subfolder exists
                 fs.appendFileSync(
-                    `${dir}/${sub.subName}/${dir}.resources.en.ts`, 
+                    `${dir}/${sub.subFolder}/${dir}.${sub.fileType}`,
                     `${sub.fileContent}`
                 );                
-            }
-
         }
 
     }
